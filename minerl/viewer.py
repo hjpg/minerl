@@ -22,8 +22,6 @@ parser.add_argument("stream_name", type=str,  nargs='?', default=None,
     "".format(_DOC_TRAJ_NAME))
 
 
-
-
 if __name__=="__main__":
     import pyglet
     import minerl
@@ -167,7 +165,6 @@ if __name__=="__main__":
                 self.isopen = False
 
         def blit_texture(self, arr, pos_x=0, pos_y=0, width=None, height=None):
-
             assert len(arr.shape) == 3, "You passed in an image with the wrong number shape"
             image = pyglet.image.ImageData(arr.shape[1], arr.shape[0], 
                 'RGB', arr.tobytes(), pitch=arr.shape[1]*-3)

@@ -27,7 +27,10 @@ from minerl.env.core import MineRLEnv, missions_dir
 
 import numpy as np
 
-  
+from herobraine.env_specs import register_envs
+
+
+
 register(
     id='MineRLTreechop-v0',
     entry_point='minerl.env:MineRLEnv',
