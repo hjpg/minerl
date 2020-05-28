@@ -187,7 +187,6 @@ def test_env(environment='MineRLObtainTest-v0'):
                 print(obs['inventory'])
                 print_next_inv = False
 
-            key = input('')
             print(action)
             if reward != 0:
                 print(obs['inventory'])
