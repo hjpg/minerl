@@ -118,9 +118,11 @@ def gen_obtain_debug_actions(env):
 
 
 def test_wrapped_env(environment='MineRLObtainTest-v0', wrapped_env='MineRLObtainTestVector-v0'):
+
+    wrapper = Vectorized(ObtainDiamondDebug(dense=False))
     env = gym.make(environment)
     wenv = gym.make(wrapped_env)
-    wrapper = Vectorized(ObtainDiamondDebug(dense=False))
+    # TODO: 
     for _ in range(2):
         env.reset()
         wenv.reset()
@@ -136,9 +138,6 @@ def test_wrapped_env(environment='MineRLObtainTest-v0', wrapped_env='MineRLObtai
         obs, _, _, _ = env.step(env.action_space.no_op())
         wobs, _, _, _ = wenv.step(wenv.action_space.no_op())
 
-        print(obs)
-        print(wobs)
-        print(wrapper.unwrap_observation(wobs))
         assert_equal_recursive(obs, wrapper.unwrap_observation(wobs))
 
         for action in gen_obtain_debug_actions(env):
@@ -233,4 +232,4 @@ def test_env(environment='MineRLObtainTest-v0', interactive=False):
     
 
 if __name__ == '__main__':
-    test_env(interactive=True)
+    test_wrapped_env()
