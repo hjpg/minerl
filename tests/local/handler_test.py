@@ -161,6 +161,11 @@ def test_wrapped_env(environment='MineRLObtainTest-v0', wrapped_env='MineRLObtai
         print("MISSION DONE")
 
 
+def test_random_walk():
+    # TODO assert that a random walk generates the same path
+    assert False
+
+
 def test_dense_env():
     test_env('MineRLObtainTestDense-v0')
 
