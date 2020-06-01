@@ -116,9 +116,26 @@ def gen_obtain_debug_actions(env):
 
     return actions
 
+
+def test_sample_obf_env(environment='MineRLObtainDiamondVectorObf-v0'):
+    env = gym.make(environment)
+    env.reset()
+    done = False
+    while not done:
+        _, _, done, _ = env.step(env.action_space.sample())
+
+
+def test_wrapped_sample_env(environment='MineRLObtainDiamondVectorObf-v0', base_env='MineRLObtainDiamond-v0'):
+    env = gym.make(environment)
+    base_env = gym.make(base_env)
+    env.reset()
+    done = False
+    while not done:
+        _, _, done, _ = env.step(env.env_spec.wrap_action(base_env.action_space.sample()))
+
+
 def test_wrapped_obf_env():
     return test_wrapped_env(environment='MineRLObtainTest-v0', wrapped_env='MineRLObtainTestVectorObf-v0')
-
 
 
 def test_wrapped_env(environment='MineRLObtainTest-v0', wrapped_env='MineRLObtainTestVector-v0'):
