@@ -7,6 +7,8 @@ import coloredlogs
 from herobraine.wrappers.vector_wrapper import Vectorized
 from herobraine.env_specs.obtain_specs import ObtainDiamondDebug
 from herobraine.hero.test_spaces import assert_equal_recursive
+from herobraine.wrappers.obfuscation_wrapper import Obfuscated
+import herobraine
 
 coloredlogs.install(level=logging.DEBUG)
 reward_dict = {
@@ -114,7 +116,16 @@ def gen_obtain_debug_actions(env):
         [act(attack=1) for _ in range(20)]
         [act(forward=1) for _ in range(10)]
 
+    [act() for _ in range(10)]
+
     return actions
+
+
+def test_acitons():
+    wrapper = herobraine.env_specs.MINERL_OBTAIN_TEST_DENSE_OBF_V0
+    acts = gen_obtain_debug_actions(wrapper.env_to_wrap.env_to_wrap)
+    for act in acts:
+        wrapper.wrap_action(act)
 
 
 def test_sample_obf_env(environment='MineRLObtainDiamondVectorObf-v0'):
@@ -181,18 +192,15 @@ def test_wrapped_env(environment='MineRLObtainTest-v0', wrapped_env='MineRLObtai
             del obs['pov']
             del unwobsed['pov']
             # TODO: Make sure that items drop in the same direction with the same seed.
-            assert_equal_recursive(obs, unwobsed)
+            # TODO: Make new vector
 
             total_reward += reward
             if done:
+                assert_equal_recursive(obs, unwobsed)
                 break
 
         print("MISSION DONE")
-
-
-def test_random_walk():
-    # TODO assert that a random walk generates the same path
-    assert False
+        assert_equal_recursive(obs, unwobsed)
 
 
 def test_dense_env():
@@ -262,4 +270,4 @@ def test_env(environment='MineRLObtainTest-v0', interactive=False):
     
 
 if __name__ == '__main__':
-    test_wrapped_env()
+    test_wrapped_obf_env()
